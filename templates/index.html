@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Text to Sign Language</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 40px;
+      background: #f5f5f5;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .sign-images {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .sign-images img {
+      width: 80px;
+      height: 80px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: white;
+    }
+
+    textarea {
+      width: 300px;
+      padding: 8px;
+    }
+
+    button {
+      padding: 8px 20px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h1>Text to Sign Language Converter</h1>
+
+  <form action="/process-text" method="post">
+    <label for="input_text">Enter your text:</label><br>
+    <textarea name="input_text" rows="3" required></textarea><br><br>
+    <button type="submit">Convert</button>
+  </form>
+
+  {% if input_text %}
+  <h2>Input Text:</h2>
+  <p>{{ input_text }}</p>
+
+  <h2>Sign Language Output:</h2>
+  <div class="sign-images">
+    {% for img in output_images %}
+      <img src="{{ img }}" alt="sign">
+    {% endfor %}
+  </div>
+{% endif %}
+
+{% if tts_audio %}
+  <h2>Audio Output:</h2>
+  <audio controls autoplay>
+    <source src="{{ tts_audio }}" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+{% endif %}
+
+</body>
+</html>
